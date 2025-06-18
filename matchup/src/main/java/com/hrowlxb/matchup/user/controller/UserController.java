@@ -30,7 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/signup")
-    public String showSignupForm() {
+    public String showSignupForm(Model model) {
+        model.addAttribute("title", "회원가입");
         return "user/signup";
     }
 
@@ -41,7 +42,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        model.addAttribute("title", "로그인");
         return "user/login";
     }
 }

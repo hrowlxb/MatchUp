@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>매치 목록</title>
-</head>
-<body>
-<h1>매치 목록</h1>
-<a href="/matches/new">새 매치 만들기</a>
-<ul>
-    {{#matches}}
-        <li>{{title}} - {{location}} - {{matchTime}} - {{maxPlayers}}명</li>
-    {{/matches}}
-</ul>
-</body>
-</html>
+{{> layout/header }}
+
+<main>
+    <h2>매치 목록</h2>
+
+    <a href="/matches/new" class="btn-add-match">+ 매치 추가</a>
+
+    <ul class="match-list">
+        {{#matches}}
+            <li class="match-item">
+                <a href="/matches/{{id}}">
+                    <h3>{{title}}</h3>
+                    <p>장소: {{location}}</p>
+                    <p>시간: {{matchTime}}</p>
+                    <p>최대 인원: {{maxPlayers}}</p>
+                </a>
+            </li>
+        {{/matches}}
+        {{^matches}}
+            <li>등록된 매치가 없습니다.</li>
+        {{/matches}}
+    </ul>
+</main>
+
+{{> layout/footer }}

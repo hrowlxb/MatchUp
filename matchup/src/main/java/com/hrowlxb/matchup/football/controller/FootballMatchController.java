@@ -23,6 +23,7 @@ public class FootballMatchController {
     @GetMapping
     public String listMatches(Model model) {
         model.addAttribute("matches", footballService.getAllMatches());
+        model.addAttribute("title", "Matches");
         return "football/match-list";
     }
 
@@ -37,6 +38,7 @@ public class FootballMatchController {
     @GetMapping("/new")
     public String createMatchForm(Model model) {
         model.addAttribute("match", new MatchCreateRequest());
+        model.addAttribute("title", "New Match");
         return "football/match-form";
     }
 
