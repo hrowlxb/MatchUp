@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>매치 목록</title>
+</head>
+<body>
+<h1>매치 목록</h1>
+<a href="/matches/new">새 매치 만들기</a>
+<ul>
+    {{#matches}}
+        <li>{{title}} - {{location}} - {{matchTime}} - {{maxPlayers}}명</li>
+    {{/matches}}
+</ul>
+</body>
+</html>

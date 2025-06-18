@@ -1,0 +1,26 @@
+<h1>전체 사용자 목록</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>권한</th>
+        <th>승격</th>
+    </tr>
+    {{#users}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{username}}</td>
+            <td>{{email}}</td>
+            <td>{{role}}</td>
+            <td>
+                {{^isAdmin}}
+                    <form method="post" action="/admin/users/{{id}}/promote">
+                        <button type="submit">관리자로 승격</button>
+                    </form>
+                {{/isAdmin}}
+            </td>
+        </tr>
+    {{/users}}
+</table>
