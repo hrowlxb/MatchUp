@@ -8,11 +8,11 @@
 <body>
 <header>
     <nav>
-        <a href="/">MatchUp</a>
+        <a href="/matches">MatchUp</a>
         <ul>
             <li><a href="/matches">경기목록</a></li>
             {{#user}}
-                <li><a href="/users">{{user.username}} 님</a></li>
+                <li><a href="/mypage">{{user.username}} 님</a></li>
                 <li><a href="/logout">로그아웃</a></li>
             {{/user}}
             {{^user}}

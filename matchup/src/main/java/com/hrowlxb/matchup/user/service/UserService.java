@@ -6,12 +6,19 @@ import com.hrowlxb.matchup.user.dto.UserSignupRequest;
 import com.hrowlxb.matchup.user.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -27,6 +34,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @PostConstruct
     public void initAdminAccount() {
         String adminEmail = "admin@matchup.com";
@@ -38,7 +49,12 @@ public class UserService {
                     .role(Role.ROLE_ADMIN)
                     .build();
             userRepository.save(admin);
-            System.out.println("✅ [관리자 계정 자동 생성] 이메일: " + adminEmail + " / 비밀번호: admin1234");
+            log.info("✅ [관리자 계정 자동 생성] 이메일: {} / 비밀번호: {}", adminEmail, "admin1234");
         }
+    }
+
+    @Transactional
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 }

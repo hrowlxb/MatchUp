@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class MatchCreateRequest {
+    private Long id;
     private String title;
     private String location;
     private LocalDateTime matchTime;

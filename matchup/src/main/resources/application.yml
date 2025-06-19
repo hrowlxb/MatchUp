@@ -3,3 +3,5 @@ server:
 spring:
   application:
     name: matchup
+  session:
+    timeout: 30m

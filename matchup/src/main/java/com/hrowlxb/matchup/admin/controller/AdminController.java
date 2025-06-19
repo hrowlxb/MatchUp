@@ -40,6 +40,7 @@ public class AdminController {
         model.addAttribute("users", userList);
         model.addAttribute("username", userDetails.getUser().getUsername());
         model.addAttribute("isAdmin", userDetails.getUser().getRole() == Role.ROLE_ADMIN);
+        model.addAttribute("title", "users-list");
         return "admin/user-list";
     }
 

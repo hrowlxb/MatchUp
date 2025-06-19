@@ -17,12 +17,13 @@ public class FootballService {
 
     private final FootballRepository footballRepository;
 
-    public void createMatch(MatchCreateRequest request) {
+    public void createMatch(MatchCreateRequest request, User creator) {
         FootballMatch match = FootballMatch.builder()
                 .title(request.getTitle())
                 .location(request.getLocation())
                 .matchTime(request.getMatchTime())
                 .maxPlayers(request.getMaxPlayers())
+                .createdBy(creator)
                 .build();
         footballRepository.save(match);
     }
@@ -57,5 +58,21 @@ public class FootballService {
                 .orElseThrow(() -> new IllegalArgumentException("Match not found"));
 
         match.getParticipants().remove(user);
+    }
+
+    @Transactional
+    public void updateMatch(Long id, MatchCreateRequest request) {
+        FootballMatch match = footballRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Match not found"));
+
+        match.setTitle(request.getTitle());
+        match.setLocation(request.getLocation());
+        match.setMatchTime(request.getMatchTime());
+        match.setMaxPlayers(request.getMaxPlayers());
+    }
+
+    @Transactional
+    public void deleteMatch(Long id) {
+        footballRepository.deleteById(id);
     }
 }

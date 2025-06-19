@@ -1,0 +1,46 @@
+{{> layout/header }}
+
+<main>
+    <h2>매치 상세</h2>
+
+    <section class="match-detail">
+        <h3>{{match.title}}</h3>
+        <p><strong>장소:</strong> {{match.location}}</p>
+        <p><strong>시간:</strong> {{match.matchTime}}</p>
+        <p><strong>최대 인원:</strong> {{match.maxPlayers}}</p>
+        <p><strong>참여 인원:</strong> {{match.participants.size}}명</p>
+        <p><strong>남은 자리:</strong> {{remainingSeats}}명</p>
+
+        {{#isFull}}
+            <p style="color: red;"><strong>모집 마감</strong></p>
+        {{/isFull}}
+
+        {{#isParticipant}}
+            <form action="/matches/{{match.id}}/leave" method="post">
+                <button type="submit" class="btn-leave">나가기</button>
+            </form>
+        {{/isParticipant}}
+
+        {{#canJoin}}
+            <form action="/matches/{{match.id}}/join" method="post">
+                <button type="submit" class="btn-join">참가하기</button>
+            </form>
+        {{/canJoin}}
+
+        {{#canEdit}}
+            <form action="/matches/{{match.id}}/edit" method="get" style="display:inline;">
+                <button type="submit" class="btn-edit">수정</button>
+            </form>
+            <form action="/matches/{{match.id}}/delete" method="post" style="display:inline;"
+                  onsubmit="return confirm('정말 삭제하시겠습니까?');">
+                <button type="submit" class="btn-delete">삭제</button>
+            </form>
+        {{/canEdit}}
+
+    </section>
+
+    <a href="/matches/new" class="btn-add-match">+ 매치 추가</a>
+    <a href="/matches" class="btn-back">← 매치 목록으로</a>
+</main>
+
+{{> layout/footer }}
