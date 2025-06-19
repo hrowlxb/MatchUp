@@ -1,7 +1,9 @@
 package com.hrowlxb.matchup.config;
 
 import com.hrowlxb.matchup.user.auth.CustomLoginSuccessHandler;
+import com.hrowlxb.matchup.user.auth.CustomUserDetails;
 import com.hrowlxb.matchup.user.auth.CustomUserDetailsService;
+import com.hrowlxb.matchup.user.domain.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,8 +46,16 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        .defaultSuccessUrl("/admin/users", true)
                         .successHandler(new CustomLoginSuccessHandler())
                         .failureUrl("/login?error")
+                        .successHandler((request, response, authentication) -> {
+                            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+                            String redirectUrl = userDetails.getUser().getRole() == Role.ROLE_ADMIN
+                                    ? "/admin/users"
+                                    : "/matches";
+                            response.sendRedirect(redirectUrl);
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout
